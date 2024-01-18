@@ -17,8 +17,4 @@ data:
           try_files $uri $uri/ /index.html;
           index  index.html;
       }
-
-      location /hello {
-          return 200 'Hello Cloud Native Lima 2024!!';
-      }
     }
