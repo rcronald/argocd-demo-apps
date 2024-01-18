@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app-dpy
+  labels:
+    app: frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      namespace: onebank-dev-ns
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+      - name: frontend-app-ctr
+        image: rcronald/frontend-app
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d/
+          name: frontend-app-nginx-volume
+        envFrom:
+          - configMapRef:
+              name: frontend-app-configmap
+          - secretRef:
+              name: frontend-app-secret
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: frontend-app-nginx-configmap
+        name: frontend-app-nginx-volume
