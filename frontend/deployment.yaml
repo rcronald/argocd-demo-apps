@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend-app-ctr
-        image: rcronald/frontend-app
+        image: docker.io/rcronald/frontend
         resources:
           requests:
             memory: "64Mi"
